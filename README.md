@@ -1,4 +1,5 @@
-﻿# Export XLSX - Highcharts module
+﻿
+# Export XLSX - Highcharts module
 
 This plugin adds the capability to export from Highcharts to the Excel .xlsx format. This is an updated version of the original [export-xlsx](https://www.highcharts.com/plugin-registry/single/57/Export-xlsx) plugin. I removed the moment.js and jQuery requirements and switched to using the [exceljs](https://github.com/exceljs/exceljs) library for exporting. Using exceljs makes available more options for custom export formatting.
 
@@ -40,6 +41,12 @@ Excel worksheet name (Excel restricts sheet name length to <= 31 characters) Def
 Category column title in Excel. Default: `Highcharts default`
 ##### `categoryColumn.numberFormat` (String)
 Category column Excel number format. Default: `undefined` for non-datetime x-axis, `yyyy-mm-dd hh:mm:ss` for datetime x-axis.
+##### `headerStyle.font.color` (String)
+Column header font hexadecimal color. Default: `undefined`
+##### `headerStyle.font.bold` (Boolean)
+Make column header font bold. Default: `undefined`
+##### `headerStyle.fill.color` (String)
+Column header fill hexadecimal color. Default: `undefined`
 
 
 #### workbook
