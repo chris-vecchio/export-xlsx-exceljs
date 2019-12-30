@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Export XLSX Demo</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@3.5.0/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
+    <script src="https://cdn.statically.io/gh/SheetJS/ssf/e267d1d6/ssf.js"></script>
+    <script src="./js/export-xlsx.js"></script>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+    <div class="chart" id="chart-container-1"></div>
+    <div class="chart" id="chart-container-2"></div>
+    <div class="chart" id="chart-container-3"></div>
+    <script>
+    $(document).ready(function() {
+        var chartOptions1 = {
+            chart: {
+                zoomType: 'x'
+            },
+            exporting: {
+                filename: 'export_xlsx_example',
+                xlsx: {
+                    worksheet: {
+                        autoFitColumns: true,
+                        categoryColumn: {
+                            title: 'Date',
+                            numberFormat: 'yyyy-mm'
+                        }
+                    },
+                    workbook: {
+                        fileProperties: {
+                            creator: "File Author",
+                            company: "File Company",
+                            created: new Date(2017, 11, 31)
+                        }
+                    }
+                }
+            },
+            title: {
+                text: 'US Unemployment Rates by Educational Attainment',
+            },
+            yAxis: {
+                title: {
+                    text: 'Percent'
+                }
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: null
+                }
+            },
+            plotOptions: {
+                series: {
+                    pointStart: Date.UTC(2007, 0, 1),
+                    pointIntervalUnit: 'month',
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },
+            series: [{
+                index: 0,
+                zIndex: 3,
+                legendIndex: 0,
+                name: 'Less than High School',
+                xlsx: {
+                    numberFormat: '0.0',
+                    name: 'Less than HS'
+                },
+                data: [6.9, 7.3, 6.9, 7.1, 6.6, 6.7, 7.3, 6.5, 7.6, 7.3, 7.7, 7.7, 7.7, 7.4, 8.4, 7.7, 8.1, 8.7, 8.6, 9.7, 9.8, 10.3, 10.8, 11.1, 12.4, 13.2, 14.0, 14.9, 15.2, 15.6, 15.3, 15.6, 14.9, 15.2, 14.7, 15.0, 15.3, 15.8, 14.9, 14.7, 14.6, 14.2, 13.5, 14.1, 15.6, 15.0, 15.4, 15.0, 14.3, 14.0, 14.1, 14.7, 14.5, 14.4, 14.5, 14.1, 14.3, 13.5, 12.8, 13.7, 13.0, 13.1, 12.8, 12.5, 12.9, 12.6, 12.4, 11.8, 11.7, 12.1, 12.0, 11.8, 12.0, 11.3, 11.1, 11.6, 11.0, 10.7, 10.8, 11.1, 10.5, 10.9, 10.7, 9.8, 9.4, 9.8, 9.4, 8.7, 9.2, 9.2, 9.5, 9.2, 8.5, 8.1, 8.6, 8.6, 8.3, 8.2, 8.6, 8.5, 8.7, 8.2, 8.3, 7.9, 7.9, 7.6, 6.8, 6.5, 7.1, 7.0, 7.4, 7.6, 7.5, 7.6, 6.4, 7.4, 8.5, 7.5, 7.8, 7.6, 7.4, 7.6, 6.6, 6.4, 6.3, 6.5, 7.0, 6.1, 6.7, 6.0, 5.2, 6.3, 5.5, 5.6, 5.6, 5.8, 5.5, 5.6, 5.0, 5.7, 5.6, 5.9, 5.6, 5.8, 5.7]
+            }, {
+                index: 1,
+                zIndex: 2,
+                legendIndex: 1,
+                xlsx: {
+                    numberFormat: '0',
+                    name: 'HS'
+                },
+                name: 'High School',
+                data: [4.3, 4.3, 4.0, 4.1, 4.4, 4.1, 4.6, 4.4, 4.5, 4.6, 4.5, 4.7, 4.7, 4.7, 5.1, 5.0, 5.0, 5.1, 5.4, 5.8, 6.2, 6.4, 7.0, 7.8, 8.2, 8.5, 9.2, 9.5, 10.0, 9.7, 9.5, 9.7, 10.6, 11.0, 10.3, 10.6, 10.2, 10.7, 11.0, 10.8, 10.9, 10.6, 10.0, 10.0, 9.7, 9.8, 10.0, 9.8, 9.5, 9.7, 9.7, 9.9, 9.6, 10.0, 9.1, 9.3, 9.4, 9.4, 8.8, 8.7, 8.5, 8.3, 8.1, 8.0, 8.3, 8.6, 8.5, 8.6, 8.5, 8.3, 8.0, 8.0, 8.1, 7.9, 7.7, 7.5, 7.3, 7.7, 7.5, 7.4, 7.6, 7.2, 7.2, 7.0, 6.5, 6.4, 6.3, 6.2, 6.5, 5.9, 6.1, 6.1, 5.4, 5.7, 5.7, 5.3, 5.4, 5.4, 5.3, 5.4, 5.8, 5.4, 5.5, 5.5, 5.3, 5.2, 5.5, 5.6, 5.2, 5.2, 5.3, 5.4, 5.1, 5.1, 5.1, 5.0, 5.3, 5.5, 5.0, 5.1, 5.2, 4.9, 4.9, 4.6, 4.7, 4.6, 4.5, 5.0, 4.4, 4.3, 4.4, 4.2, 4.4, 4.4, 4.3, 4.3, 3.9, 4.1, 4.0, 3.9, 3.7, 4.0, 3.5, 3.8, 3.8]
+            }, {
+                index: 2,
+                zIndex: 1,
+                legendIndex: 2,
+                name: 'Some College',
+                xlsx: {
+                    numberFormat: '0.00'
+                },
+                data: [3.8, 3.6, 3.6, 3.6, 3.4, 3.5, 3.6, 3.6, 3.4, 3.5, 3.3, 3.8, 3.7, 3.8, 3.9, 4.0, 4.3, 4.3, 4.6, 4.9, 5.0, 5.2, 5.5, 5.7, 6.5, 7.3, 7.5, 7.7, 7.8, 8.1, 8.0, 8.1, 8.3, 8.7, 8.8, 8.7, 8.6, 8.1, 8.4, 8.4, 8.2, 8.1, 8.3, 8.7, 8.9, 8.2, 8.6, 8.1, 8.1, 7.9, 7.5, 7.5, 7.8, 8.3, 8.3, 8.3, 8.5, 8.1, 7.7, 7.6, 7.1, 7.2, 7.5, 7.6, 7.7, 7.3, 7.2, 6.7, 6.6, 6.9, 6.5, 6.9, 6.9, 6.5, 6.3, 6.4, 6.5, 6.5, 6.1, 6.1, 6.1, 6.4, 6.4, 6.2, 5.9, 6.0, 6.0, 5.7, 5.5, 5.2, 5.3, 5.3, 5.4, 4.9, 4.9, 5.0, 5.2, 5.0, 4.8, 4.7, 4.4, 4.2, 4.3, 4.3, 4.3, 4.4, 4.4, 4.2, 4.2, 4.2, 4.2, 4.2, 3.8, 4.2, 4.2, 4.2, 4.2, 3.9, 3.9, 3.8, 3.8, 4.0, 3.7, 3.7, 4.0, 3.8, 3.8, 3.7, 3.6, 3.7, 3.6, 3.6, 3.4, 3.5, 3.5, 3.4, 3.2, 3.3, 3.2, 3.5, 3.2, 3.0, 3.1, 3.3, 3.4]
+            }, {
+                index: 3,
+                zIndex: 1,
+                legendIndex: 3,
+                name: 'Bachelor Degree & Higher',
+                data: [2.1, 1.9, 1.8, 1.9, 2.0, 2.0, 2.1, 2.1, 2.0, 2.1, 2.2, 2.1, 2.1, 2.0, 2.1, 2.1, 2.2, 2.4, 2.5, 2.8, 2.6, 3.1, 3.2, 3.6, 3.9, 4.1, 4.3, 4.4, 4.8, 4.8, 4.8, 4.8, 5.0, 4.7, 4.8, 4.9, 4.9, 4.9, 4.9, 4.8, 4.6, 4.4, 4.5, 4.6, 4.5, 4.6, 5.0, 4.8, 4.3, 4.3, 4.4, 4.5, 4.5, 4.3, 4.2, 4.2, 4.2, 4.3, 4.4, 4.1, 4.3, 4.2, 4.1, 4.0, 3.9, 4.0, 4.1, 4.1, 4.0, 3.7, 3.9, 4.0, 3.8, 3.9, 3.8, 3.9, 3.9, 3.8, 3.8, 3.4, 3.7, 3.7, 3.4, 3.3, 3.3, 3.4, 3.4, 3.3, 3.2, 3.3, 3.1, 3.2, 2.9, 3.0, 3.2, 2.8, 2.8, 2.7, 2.4, 2.7, 2.8, 2.5, 2.5, 2.4, 2.5, 2.5, 2.6, 2.5, 2.5, 2.5, 2.6, 2.4, 2.5, 2.5, 2.5, 2.6, 2.5, 2.6, 2.4, 2.5, 2.5, 2.4, 2.4, 2.4, 2.3, 2.3, 2.3, 2.4, 2.3, 2.1, 2.1, 2.1, 2.2, 2.2, 2.2, 2.1, 2.0, 2.3, 2.2, 2.0, 2.0, 2.0, 2.2, 2.1, 2.4]
+            }]
+        };
+        var chart = new Highcharts.Chart('chart-container-1', chartOptions1);
+
+        var chartOptions2 = {
+            chart: {
+                type: 'spline',
+                zoomType: 'x'
+            },
+            exporting: {
+                filename: 'export_xlsx_example',
+                xlsx: {
+                    worksheet: {
+                        autoFitColumns: true,
+                        sheetName: 'Wind Speed',
+                        categoryColumn: {
+                            numberFormat: 'm/d/yyyy h:mm AM/PM'
+                        }
+                    }
+                }
+            },
+            title: {
+                text: 'Wind speed during two days'
+            },
+            subtitle: {
+                text: '13th & 14th of February, 2018 at two locations in Vik i Sogn, Norway'
+            },
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Wind speed (m/s)'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' m/s'
+            },
+            plotOptions: {
+                spline: {
+                    pointInterval: 3600000, // one hour
+                    pointStart: Date.UTC(2018, 1, 13, 0, 0, 0),
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },
+            series: [{
+                name: 'Hestavollane',
+                data: [3.7, 3.3, 3.9, 5.1, 3.5, 3.8, 4.0, 5.0, 6.1, 3.7, 3.3, 6.4, 6.9, 6.0, 6.8, 4.4, 4.0, 3.8, 5.0, 4.9, 9.2, 9.6, 9.5, 6.3, 9.5, 10.8, 14.0, 11.5, 10.0, 10.2, 10.3, 9.4, 8.9, 10.6, 10.5, 11.1, 10.4, 10.7, 11.3, 10.2, 9.6, 10.2, 11.1, 10.8, 13.0, 12.5, 12.5, 11.3, 10.1]
+            }, {
+                name: 'Vik',
+                data: [0.2, 0.1, 0.1, 0.1, 0.3, 0.2, 0.3, 0.1, 0.7, 0.3, 0.2, 0.2, 0.3, 0.1, 0.3, 0.4, 0.3, 0.2, 0.3, 0.2, 0.4, 0.0, 0.9, 0.3, 0.7, 1.1, 1.8, 1.2, 1.4, 1.2, 0.9, 0.8, 0.9, 0.2, 0.4, 1.2, 0.3, 2.3, 1.0, 0.7, 1.0, 0.8, 2.0, 1.2, 1.4, 3.7, 2.1, 2.0, 1.5]
+            }]
+        };
+        var chart2 = new Highcharts.Chart('chart-container-2', chartOptions2);
+
+        var chartOptions3 = {
+            chart: {
+                type: 'column'
+            },
+            exporting: {
+                filename: 'export_xlsx_example',
+                xlsx: {
+                    worksheet: {
+                        sheetName: 'Monthly Rainfall',
+                        categoryColumn: {
+                            title: 'Month'
+                        },
+                        headerStyle: {
+                            font: {
+                                color: '#FFFFFF',
+                                bold: true
+                            },
+                            fill: {
+                                color: '#414b56'
+                            }
+                        }
+                    }
+                }
+            },
+            title: {
+                text: 'Monthly Average Rainfall'
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com'
+            },
+            xAxis: {
+                categories: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec'
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Rainfall (mm)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Tokyo',
+                xlsx: {
+                    numberFormat: '0',
+                },
+                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+            }, {
+                name: 'New York',
+                data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+            }, {
+                name: 'London',
+                data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+            }, {
+                name: 'Berlin',
+                data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+            }]
+        };
+        var chart3 = new Highcharts.Chart('chart-container-3', chartOptions3);
+    });
+    </script>
+</body>
+
+</html>
