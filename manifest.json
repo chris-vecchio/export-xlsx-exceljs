@@ -1,6 +1,6 @@
 {
     "name": "Export-xlsx",
-    "version": "1.05",
+    "version": "1.06",
     "title": "Export-xlsx",
     "author": {
         "name": "Chris Vecchio",
@@ -13,9 +13,9 @@
         }
     ],
     "dependencies": {
-        "highcharts": "6.1.0+",
-        "exporting": "6.1.0+",
-        "export-data": "6.1.0+",
+        "highcharts": "7.0.0+",
+        "exporting": "7.0.0+",
+        "export-data": "7.0.0+",
         "exceljs": "3.5.0+",
         "FileSaver": "2.0.2+"
     },
@@ -33,7 +33,7 @@
     "bugs": "https://github.com/chris-vecchio/export-xlsx-exceljs/issues",
     "download": "https://github.com/chris-vecchio/export-xlsx-exceljs",
     "demo": [
-        "https://jsfiddle.net/chrisvecchio/4p0b1muf/"
+        "https://jsfiddle.net/chrisvecchio/ds6ocjy0/"
     ],
     "maintainers": [
         {

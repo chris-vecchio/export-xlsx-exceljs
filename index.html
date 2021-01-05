@@ -9,8 +9,8 @@
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/exceljs@3.5.0/dist/exceljs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@latest/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@latest/dist/FileSaver.min.js"></script>
     <script src="https://cdn.statically.io/gh/SheetJS/ssf/e267d1d6/ssf.js"></script>
     <script src="./js/export-xlsx.js"></script>
     <link rel="stylesheet" href="./css/styles.css">
@@ -20,6 +20,8 @@
     <div class="chart" id="chart-container-1"></div>
     <div class="chart" id="chart-container-2"></div>
     <div class="chart" id="chart-container-3"></div>
+    <div class="chart" id="chart-container-4"></div>
+    <div class="chart" id="chart-container-5"></div>
     <script>
     $(document).ready(function() {
         var chartOptions1 = {
@@ -28,11 +30,25 @@
             },
             exporting: {
                 filename: 'export_xlsx_example',
+                csv: {
+                    // Test export-xlsx interface with columnHeaderFormatter function
+                    // The column headers in the exported workbook should be as follows:
+                    // FormatterName, Less than HS, HS, Some College Mod, Bachelor Degree & Higher Mod
+                    columnHeaderFormatter: function(item, key) {
+                        if (!item || item instanceof Highcharts.Axis) {
+                            return item.options.title.text || 'FormatterName';
+                        }
+                        // Item is not axis, now we are working with series.
+                        // Key is the property on the series we show in this column.
+                        else {
+                            return item.name + ' Mod';
+                        }
+                    }
+                },
                 xlsx: {
                     worksheet: {
                         autoFitColumns: true,
                         categoryColumn: {
-                            title: 'Date',
                             numberFormat: 'yyyy-mm'
                         }
                     },
@@ -105,8 +121,9 @@
                 data: [2.1, 1.9, 1.8, 1.9, 2.0, 2.0, 2.1, 2.1, 2.0, 2.1, 2.2, 2.1, 2.1, 2.0, 2.1, 2.1, 2.2, 2.4, 2.5, 2.8, 2.6, 3.1, 3.2, 3.6, 3.9, 4.1, 4.3, 4.4, 4.8, 4.8, 4.8, 4.8, 5.0, 4.7, 4.8, 4.9, 4.9, 4.9, 4.9, 4.8, 4.6, 4.4, 4.5, 4.6, 4.5, 4.6, 5.0, 4.8, 4.3, 4.3, 4.4, 4.5, 4.5, 4.3, 4.2, 4.2, 4.2, 4.3, 4.4, 4.1, 4.3, 4.2, 4.1, 4.0, 3.9, 4.0, 4.1, 4.1, 4.0, 3.7, 3.9, 4.0, 3.8, 3.9, 3.8, 3.9, 3.9, 3.8, 3.8, 3.4, 3.7, 3.7, 3.4, 3.3, 3.3, 3.4, 3.4, 3.3, 3.2, 3.3, 3.1, 3.2, 2.9, 3.0, 3.2, 2.8, 2.8, 2.7, 2.4, 2.7, 2.8, 2.5, 2.5, 2.4, 2.5, 2.5, 2.6, 2.5, 2.5, 2.5, 2.6, 2.4, 2.5, 2.5, 2.5, 2.6, 2.5, 2.6, 2.4, 2.5, 2.5, 2.4, 2.4, 2.4, 2.3, 2.3, 2.3, 2.4, 2.3, 2.1, 2.1, 2.1, 2.2, 2.2, 2.2, 2.1, 2.0, 2.3, 2.2, 2.0, 2.0, 2.0, 2.2, 2.1, 2.4]
             }]
         };
-        var chart = new Highcharts.Chart('chart-container-1', chartOptions1);
+        var chart1 = new Highcharts.Chart('chart-container-1', chartOptions1);
 
+        // Chart 2 adapted from https://www.highcharts.com/demo/spline-plot-bands
         var chartOptions2 = {
             chart: {
                 type: 'spline',
@@ -163,6 +180,7 @@
         };
         var chart2 = new Highcharts.Chart('chart-container-2', chartOptions2);
 
+        // Chart 3 adapted from https://www.highcharts.com/demo/column-basic
         var chartOptions3 = {
             chart: {
                 type: 'column'
@@ -252,6 +270,148 @@
             }]
         };
         var chart3 = new Highcharts.Chart('chart-container-3', chartOptions3);
+
+        // Chart 4 adapted from https://www.highcharts.com/demo/combo
+        var chartOptions4 = {
+            title: {
+                text: 'Combination chart'
+            },
+            xAxis: {
+                categories: ['Apples', 'Oranges', 'Pears', 'Bananas', 'Plums']
+            },
+            tooltip: {
+                formatter: function() {
+                    var s;
+                    if (this.point.name) { // the pie chart
+                        s = '' +
+                            this.point.name + ': ' + this.y + ' fruits';
+                    } else {
+                        s = '' +
+                            this.x + ': ' + this.y;
+                    }
+                    return s;
+                }
+            },
+            labels: {
+                items: [{
+                    html: 'Total fruit consumption',
+                    style: {
+                        left: '40px',
+                        top: '8px',
+                        color: 'black'
+                    }
+                }]
+            },
+            series: [{
+                type: 'column',
+                name: 'Jane',
+                data: [3, 2, 1, 3, 4]
+            }, {
+                type: 'column',
+                name: 'John',
+                data: [2, 3, 5, 7, 6]
+            }, {
+                type: 'column',
+                name: 'Joe',
+                data: [4, 3, 3, 9, 0]
+            }, {
+                type: 'spline',
+                name: 'Average',
+                data: [3, 2.67, 3, 6.33, 3.33]
+            }, {
+                type: 'pie',
+                name: 'Total consumption',
+                data: [{
+                    name: 'Jane',
+                    y: 13,
+                    color: '#4572A7' // Jane's color
+                }, {
+                    name: 'John',
+                    y: 23,
+                    color: '#AA4643' // John's color
+                }, {
+                    name: 'Joe',
+                    y: 19,
+                    color: '#89A54E' // Joe's color
+                }],
+                center: [100, 80],
+                size: 100,
+                showInLegend: false,
+                dataLabels: {
+                    enabled: false
+                }
+            }]
+        };
+        var chart4 = new Highcharts.Chart('chart-container-4', chartOptions4);
+
+        // Chart 5 adapted from https://www.highcharts.com/demo/pie-basic
+        var chartOptions5 = {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Browser market shares in January, 2018'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                xlsx: {
+                    numberFormat: '0.0'
+                },
+                data: [{
+                    name: 'Chrome',
+                    y: 61.41,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Internet Explorer',
+                    y: 11.84
+                }, {
+                    name: 'Firefox',
+                    y: 10.85
+                }, {
+                    name: 'Edge',
+                    y: 4.67
+                }, {
+                    name: 'Safari',
+                    y: 4.18
+                }, {
+                    name: 'Sogou Explorer',
+                    y: 1.64
+                }, {
+                    name: 'Opera',
+                    y: 1.6
+                }, {
+                    name: 'QQ',
+                    y: 1.2
+                }, {
+                    name: 'Other',
+                    y: 2.61
+                }]
+            }]
+        };
+        var chart5 = new Highcharts.Chart('chart-container-5', chartOptions5);
     });
     </script>
 </body>
